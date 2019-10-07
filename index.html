@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS Project 1</title>
+    <script src="https://kit.fontawesome.com/0dd18e4074.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="wrapper">
+        <h1>Project</h1>
+    </header>
+    <div class="wrapper main">
+        <div class="active">
+            <div class="info">
+                <!-- Timer will countdown (maybe 5 seconds) and user must input a button before timer reaches 0 -->
+                <!-- winner counter => decreases losing player hp -->
+                <div class="hp">
+                    <div class="bar user">
+                        <p class="remainingHpUser"></p>
+                    </div>
+                    <p>Player HP</p>
+                </div>
+                <div class="timer">TIME
+                    <p class="countdown"><i class="fas fa-infinity"></i></p>
+                </div>
+                <div class="hp">
+                    <div class="bar pc pcFlip">
+                        <p class="remainingHpPc"></p>
+                    </div>
+                    <p>Computer HP</p>
+                </div>
+            </div>
+            
+            <!-- set interval where player avatar makes slight movement (2-3 visuals) -->
+            <div class="stage">
+                <div class="standby player user">
+                    <img class="user" id="user" src="assets/player-stance.gif" alt="user sprite">
+                </div>
+                <div class="action user">-</div>
+                <div class="action pcFlip">-</div>
+                <div class="standby player pcFlip">
+                    <img class="pcFlip" id="pc"  src="assets/player-stance.gif" alt="pc sprite">
+                </div>
+            </div>
+            <div class="moveset">
+                <button id="rock" value="0"><i class="far fa-hand-rock"></i> Rock</button>
+                <button id="paper" value="1"> <i class="far fa-hand-paper"></i> Paper</button>
+                <button id="scissors" value="2"><i class="far fa-hand-scissors"></i> Scissor</button>
+            </div>
+        </div>
+        <aside>
+            <div class="logContainer">
+                <h2>Event Log</h2>
+                <!-- will print out log -->
+                <ul class="eventLog">
+                    <!-- will append log here -->                
+                </ul>
+            </div>
+        </aside>
+    </div>
+    <footer class="wrapper">
+        <button class="reset">Restart</button>
+        <!-- will interchange with reset button -->
+    </footer>
+
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
+    <script src="script.js"></script>
+</body>
+</html>
