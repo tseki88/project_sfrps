@@ -1,7 +1,5 @@
 $(function() {
 
-
-
     // Computer RNG function
     let pcInput = "";
 
@@ -12,7 +10,8 @@ $(function() {
 
 
     // On click return button ID (playerInput)
-    // Executes Game
+    // **Executes Game**
+
     let userInput = "";
 
     $(".moveset button").on("click", function() {
@@ -31,8 +30,6 @@ $(function() {
         };
     });
 
-    // $(".moveset button").on("click", function() {
-    // });
 
 
     const setOutcome = function() {
@@ -41,20 +38,16 @@ $(function() {
         appendLog(a, b);
     };
 
-    //Used to convert playerInput for Log
+
+    //Used to convert playerInput for setOutcome() [values for appendLog()]
     function inputToString(x) {
         switch(x){
             case 0:
                 return "Rock";
-                break;
-    
             case 1:
                 return "Paper";
-                break;
-    
             case 2:
                 return "Scissor";
-                break;
         };
     };
 
@@ -131,11 +124,10 @@ $(function() {
         };
     };
 
-
+    //Checks for KO hit, if not, runs normal action sprites (nested in appendLog())
     function winnerLoser(x, y) {
         userHpUpdate(score.user);
         pcHpUpdate(score.pc);
-        //need a way to access score 
 
         let checkX = x;
 
@@ -196,13 +188,13 @@ $(function() {
     };
 
 
-
     // When Game Ends, the standby-sprite doesn't reset
     function spriteWin(player, match, gifSet) {
         $(`img.${player}`).remove();
 
         $(`.action.${player}`).html(`<img class="${player}" src='assets/${match[gifSet].gif}'></img>`);
     };
+
 
 
 
@@ -241,6 +233,8 @@ $(function() {
         finishRng = Math.floor(Math.random() * 3);
         return finishRng;
     };
+
+
 
     // Gif Array Sets
     let tieGif = [
@@ -319,7 +313,10 @@ $(function() {
         },
     ];
 
-    //Button Disable Function
+
+
+
+    //Game End / Button Disable Function
     function gameEnd() {
         setTimeout(function() {
             $(".moveset button").prop("disabled", true);
@@ -340,7 +337,8 @@ $(function() {
     };
 
 
-    //Refresh Countdown
+
+    //Refresh Countdown (for Reset Button)
     function countdown() {
         $("ul.eventLog").html("<li>Refreshing Game</li>");
         setTimeout(() => {
@@ -357,6 +355,14 @@ $(function() {
         }, 4000);
     };
     
+
+    //Gif Reset (for Reset Button)
+    function resetGif(player) {
+        $(`img.${player}`).remove();
+        $(`.standby.${player}`).html(`<img class="${player}" src="assets/player-stance.gif">`);
+    };
+
+
     //Reset Button
     $(".reset").on("click", function() {
         score.pc = 5;
@@ -372,9 +378,5 @@ $(function() {
         }, 5000);
     });
     
-    //Gif Reset
-    function resetGif(player) {
-        $(`img.${player}`).remove();
-        $(`.standby.${player}`).html(`<img class="${player}" src="assets/player-stance.gif">`);
-    };
+    
 });

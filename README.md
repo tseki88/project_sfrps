@@ -14,10 +14,8 @@ These aren't 100% hard requirements, but to really push yourself, we would recom
     Nice looking HTML + CSS to go along with the jQuery
     Have some sort of computed logic in it
 
-    *************
-    
-    
-    Rock Paper Scissors with fancy StreetFighter Gif sprites.
 
-    *all copyrights belong to their respective owners*
-    *Street Fighter - CAPCOM*
+*************
+Rock Paper Scissors with fancy StreetFighter Gif sprites.
+*all copyrights belong to their respective owners*
+*Street Fighter - CAPCOM*
