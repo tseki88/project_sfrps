@@ -24,7 +24,7 @@ $(function() {
         if (score.pc != 0 && score.user != 0) {
             setTimeout(function() {
                 $(".moveset button").prop("disabled", false);
-            }, 3000);
+            }, 4000);
         } else {
             gameEnd();
         };
@@ -90,7 +90,7 @@ $(function() {
             sprite(pcV, tieGif, tieRandom());
             setTimeout(function() {
                 $(".moveset button").prop("disabled", false);
-            }, 2000);
+            }, 4000);
         } else if (a == "Rock"){
             if (b == "Paper"){
                 logOutput("Paper beats rock, you lose");
@@ -138,8 +138,8 @@ $(function() {
             case "pcFlip":
                 checkX = score.pc;
                 break;
-            default:
-                break;
+            // default:
+            //     break;
         };
 
         let checkY = y;
@@ -151,8 +151,8 @@ $(function() {
             case "pcFlip":
                 checkY = score.pc;
                 break;
-            default:
-                break;
+            // default:
+            //     break;
         };
 
         if (checkX == 0) {
