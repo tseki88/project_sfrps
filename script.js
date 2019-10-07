@@ -217,7 +217,7 @@ $(function() {
     let hitRng = 0;
 
     function hitRandom() {
-        hitRng = Math.floor(Math.random() * 4);
+        hitRng = Math.floor(Math.random() * 5);
         return hitRng;
     };
 
@@ -271,12 +271,16 @@ $(function() {
             gif: "player-shoryuken.gif",
             delay: 3000,
         },
+        {
+            gif: "player-special-kick.gif",
+            delay: 3000,
+        },
     ];
     
     let finishGif = [
         {
-            gif: "player-special-kick.gif",
-            delay: 3000,
+            gif: "player-finish-kick2.gif",
+            delay: 7700,
         },
         {
             gif: "player-special-beam.gif",
@@ -321,11 +325,13 @@ $(function() {
             $(".moveset button").prop("disabled", true);
             if (score.user === 0 || score.pc === 0) {
                 if (score.pc === 0) {
-                    logOutput(`<b>YOU WIN!</b>`);
+                    logOutput(`<b>WIN!</b>`);
+                    logOutput(`<b>YOU</b>`);
                     spriteWin("user", winGif, winRandom());
                     spriteWin("pcFlip", downGif, 3);
                 } else if (score.user === 0) {
-                    logOutput(`<b>YOU LOSE!</b>`);
+                    logOutput(`<b>LOSE!</b>`);
+                    logOutput(`<b>YOU</b>`);
                     spriteWin("pcFlip", winGif, winRandom());
                     spriteWin("user", downGif, 3);
                 };
