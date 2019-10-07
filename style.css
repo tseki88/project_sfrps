@@ -14,6 +14,14 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
     font-family: 'Times New Roman', sans-serif;
 }
 
+body {
+    background-color: darkgrey;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .wrapper {
     min-width: 1300px;
     max-width: 1300px;
@@ -23,7 +31,10 @@ html { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: 
 header {
     width: 100%;
     height: 100px;
-    background-color: bisque;
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 img {

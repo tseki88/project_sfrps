@@ -18,14 +18,17 @@ $(function() {
     $(".moveset button").on("click", function() {
         userInput = $(this).attr("value");
         pcRng();
-        setOutcome();
-        userHpUpdate(score.user);
-        pcHpUpdate(score.pc);
         $(".moveset button").prop("disabled", true);
-        setTimeout( function() {
-            $(".moveset button").prop("disabled", false);
-        }, 2000);
-        gameEnd();
+        setOutcome();
+        // userHpUpdate(score.user);
+        // pcHpUpdate(score.pc);
+        if (score.pc != 0 && score.user != 0) {
+            setTimeout(function() {
+                $(".moveset button").prop("disabled", false);
+            }, 3000);
+        } else {
+            gameEnd();
+        };
     });
 
     // $(".moveset button").on("click", function() {
@@ -52,13 +55,13 @@ $(function() {
             case 2:
                 return "Scissor";
                 break;
-        }
+        };
     };
 
     //HP Bar
     let score = {
         user: 5,
-        pc: 5
+        pc: 5,
     };
 
     function userHpUpdate(hp) {
@@ -74,11 +77,11 @@ $(function() {
     // Append Log Outcome
 
     function logOutput(printLog) {
-        $("ul.eventLog").append(`
+        $("ul.eventLog").prepend(`
         <li>${printLog}
         </li>
         `);
-    }
+    };
 
 
     function appendLog(a, b) {
@@ -92,6 +95,9 @@ $(function() {
             logOutput("Draw! Keep going!");
             sprite(userV, tieGif, tieRandom());
             sprite(pcV, tieGif, tieRandom());
+            setTimeout(function() {
+                $(".moveset button").prop("disabled", false);
+            }, 2000);
         } else if (a == "Rock"){
             if (b == "Paper"){
                 logOutput("Paper beats rock, you lose");
@@ -122,20 +128,54 @@ $(function() {
                 score.pc -= 1;
                 winnerLoser(userV, pcV);
             }
-        }
+        };
     };
 
 
     function winnerLoser(x, y) {
-        if (x.score === 0) {
-            spriteWin(y, finishGif, finishRng());
-            spriteWin(x, downGif, 2).delay(10000);
-        } else if (y.score === 0) {
-            spriteWin(x, finishGif, finishRng());
-            spriteWin(y, downGif, 2).delay(10000);
+        userHpUpdate(score.user);
+        pcHpUpdate(score.pc);
+        //need a way to access score 
+
+        let checkX = x;
+
+        switch (checkX) {
+            case "user":
+                checkX = score.user;
+                break;
+            case "pcFlip":
+                checkX = score.pc;
+                break;
+            default:
+                break;
+        };
+
+        let checkY = y;
+
+        switch (checkY) {
+            case "user":
+                checkY = score.user;
+                break;
+            case "pcFlip":
+                checkY = score.pc;
+                break;
+            default:
+                break;
+        };
+
+        if (checkX == 0) {
+            // setTimeout(() => {
+                spriteWin(y, finishGif, finishRandom());
+                spriteWin(x, downGif, 3);
+            // },0);
+        } else if (checkY == 0) {
+            // setTimeout(() => {
+                spriteWin(x, finishGif, finishRandom());
+                spriteWin(y, downGif, 3);
+            // },0);
         } else {
             sprite(x, hitGif, hitRandom());
-            sprite(y, downGif, winRandom());
+            sprite(y, downGif, downRandom());
         };
     };
 
@@ -151,7 +191,7 @@ $(function() {
 
         setTimeout( function() {
             $(`img.${player}`).remove();
-            $(`.standby.${player}`).html(`<img class="${player}" src="assets/player-stance.gif">`);
+            $(`.standby.${player}`).html(`<img class="${player}" src="assets/player-stance.gif"></img>`);
         }, match[gifSet].delay);
     };
 
@@ -172,12 +212,12 @@ $(function() {
     function tieRandom() {
         tieRng = Math.floor(Math.random() * 2);
         return tieRng;
-    }
+    };
 
     let hitRng = 0;
 
     function hitRandom() {
-        hitRng = Math.floor(Math.random() * 3);
+        hitRng = Math.floor(Math.random() * 4);
         return hitRng;
     };
 
@@ -186,7 +226,14 @@ $(function() {
     function winRandom() {
         winRng = Math.floor(Math.random() * 2);
         return winRng;
-    }
+    };
+
+    let downRng = 0;
+
+    function downRandom() {
+        downRng = Math.floor(Math.random() * 3);
+        return downRng;
+    };
 
     let finishRng = 0;
 
@@ -220,6 +267,10 @@ $(function() {
             gif: "player-beam.gif",
             delay: 3000,
         },
+        {
+            gif: "player-shoryuken.gif",
+            delay: 3000,
+        },
     ];
     
     let finishGif = [
@@ -228,12 +279,12 @@ $(function() {
             delay: 3000,
         },
         {
-            gif: "player-shoryuken.gif",
-            delay: 3000,
+            gif: "player-special-beam.gif",
+            delay: 7700,
         },
         {
-            gif: "player-special-beam",
-            delay: 9000,
+            gif: "player-special-punch.gif",
+            delay: 8000,
         },
     ];
 
@@ -248,7 +299,11 @@ $(function() {
 
     let downGif = [
         {
-            gif: "player-guard.gif",
+            gif: "player-down2.gif",
+            delay: 3000,
+        },
+        {
+            gif: "player-down3.gif",
             delay: 3000,
         },
         {
@@ -262,31 +317,53 @@ $(function() {
 
     //Button Disable Function
     function gameEnd() {
-        if (score.user === 0 || score.pc === 0) {
+        setTimeout(function() {
             $(".moveset button").prop("disabled", true);
-            if (score.user === 0) {
-                logOutput(`<b>YOU WIN!</b>`);
-                spriteWin("user", winGif, winRandom());
-                spriteWin("pcFlip", downGif, 2);
-            } else if (score.pc === 0) {
-                logOutput(`<b>YOU LOSE!</b>`);
-                spriteWin("pcFlip", winGif, winRandom());
-                spriteWin("user", downGif, 2);
+            if (score.user === 0 || score.pc === 0) {
+                if (score.pc === 0) {
+                    logOutput(`<b>YOU WIN!</b>`);
+                    spriteWin("user", winGif, winRandom());
+                    spriteWin("pcFlip", downGif, 3);
+                } else if (score.user === 0) {
+                    logOutput(`<b>YOU LOSE!</b>`);
+                    spriteWin("pcFlip", winGif, winRandom());
+                    spriteWin("user", downGif, 3);
+                };
             };
-        };
-    }
+        }, 8000);
+    };
 
+
+    //Refresh Countdown
+    function countdown() {
+        $("ul.eventLog").html("<li>Refreshing Game</li>");
+        setTimeout(() => {
+            $("ul.eventLog").append("<li>4</li>").delay(1000);
+        }, 1000);
+        setTimeout(() => {
+            $("ul.eventLog").append("<li>3</li>").delay(1000);
+        }, 2000);
+        setTimeout(() => {
+            $("ul.eventLog").append("<li>2</li>").delay(1000);
+        }, 3000);
+        setTimeout(() => {
+            $("ul.eventLog").append("<li>1</li>").delay(1000);
+        }, 4000);
+    };
     
     //Reset Button
     $(".reset").on("click", function() {
         score.pc = 5;
         score.user = 5;
-        userHpUpdate(score.user);
-        pcHpUpdate(score.pc);
-        $("ul.eventLog").html("");
-        $("button").prop("disabled", false);
-        resetGif("user");
-        resetGif("pcFlip");
+        countdown();
+        setTimeout(() => {
+            userHpUpdate(score.user);
+            pcHpUpdate(score.pc);
+            $("ul.eventLog").html("");
+            $("button").prop("disabled", false);
+            resetGif("user");
+            resetGif("pcFlip");
+        }, 5000);
     });
     
     //Gif Reset
